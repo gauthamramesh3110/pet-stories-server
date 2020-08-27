@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="pet-stories-demo:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>pet-stories-demo</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="pet-stories-demo-0.1.war">
+      <element id="artifact" artifact-name="pet-stories-demo:war exploded" />
+    </root>
+  </artifact>
+</component>
