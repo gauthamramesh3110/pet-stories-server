@@ -18,7 +18,7 @@ public class CreateUser extends HttpServlet {
         try {
             String db_user = "postgres";
             String db_password = "alert123";
-            String db_url = "jdbc:postgresql://localhost:5432/users";
+            String db_url = "jdbc:postgresql://localhost:5432/petstories";
 
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(db_url, db_user, db_password);
