@@ -16,26 +16,43 @@ public class CreateUser extends HttpServlet {
         PrintWriter respOp = resp.getWriter();
 
         try {
-            String db_user = "postgres";
-            String db_password = "alert123";
-            String db_url = "jdbc:postgresql://localhost:5432/petstories";
+            String db_user = "mirshmfqdtbodb";
+            String db_password = "f588978a84806a5b8bf7c7a2d11d3504d21d4c4e9a359810864190c1c42fff63";
+
+            String db_host = "ec2-52-7-15-198.compute-1.amazonaws.com";
+            String db_port = "5432";
+            String db_database = "dkhd5gp9gean2";
+
+            String db_url = String.format("jdbc:postgresql://%s:%s/%s", db_host, db_port, db_database);
 
             Class.forName("org.postgresql.Driver");
             Connection connection = DriverManager.getConnection(db_url, db_user, db_password);
 
             if(connection != null){
+                String usersCreateSql = "create table if not exists user_details "
+                        + "(id serial, "
+                        + "email varchar(50) not null, "
+                        + "fullname varchar(50) not null, "
+                        + "password varchar(50) not null, "
+                        + "constraint user_details_pk primary key (id) );";
+
+                Statement stm = connection.createStatement();
+                stm.execute(usersCreateSql);
+
                 String fullname = req.getParameter("fullname");
                 String email = req.getParameter("email");
                 String password = req.getParameter("password");
 
-                String sqlQuery = String.format("insert into users (email, password, fullname) values ('%s', '%s', '%s') ;", email, password, fullname);
+                String usersInsertSql = String.format("insert into user_details (email, password, fullname) values ('%s', '%s', '%s') ;", email, password, fullname);
 
-                Statement stm = connection.createStatement();
-                if(stm.executeUpdate(sqlQuery) == 1){
+
+                if(stm.executeUpdate(usersInsertSql) == 1){
                     respOp.println("User created successfully.");
                 }else{
                     respOp.println("Error Creating user.");
                 }
+                stm.close();
+                connection.close();
 
             }else{
                 respOp.println("Cannot establish connection with database.");
